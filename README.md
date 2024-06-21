@@ -7,7 +7,9 @@ make a components folder in the src folder
 
 Home components takes three components
 LeftSidebar , Feed , RightSidebar (According to Main twitter Webside)
+
 <!-- =========== -->
+
 npm i react-icons (for icons)
 
 npm i react-avatar (for avatars)
@@ -17,3 +19,13 @@ CreateTweet component in Feed
 Tweets component in Feed
 
 Search and Who to Follow create in RightSidebar
+
+<!-- ===== -->
+
+npm i react-router-dom (for client side routing)
+
+router setup is working in Body component
+
+user profile component is completed
+
+login & sign up form complete

@@ -14,7 +14,7 @@ const CreateTweet = () => {
       </div>
 
       {/* avatar input text field  */}
-      <div className=" flex items-center gap-4">
+      <div className=" flex items-center gap-4 py-3">
         <div className="py-2">
           <Avatar
             src="https://pbs.twimg.com/profile_images/1803660028882329600/DOQCUj_5_400x400.jpg"
