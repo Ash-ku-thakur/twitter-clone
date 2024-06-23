@@ -10,6 +10,8 @@ LeftSidebar , Feed , RightSidebar (According to Main twitter Webside)
 
 <!-- =========== -->
 
+# React-Icons
+
 npm i react-icons (for icons)
 
 npm i react-avatar (for avatars)
@@ -22,6 +24,8 @@ Search and Who to Follow create in RightSidebar
 
 <!-- ===== -->
 
+# React-Router-Dom
+
 npm i react-router-dom (for client side routing)
 
 router setup is working in Body component
@@ -29,3 +33,16 @@ router setup is working in Body component
 user profile component is completed
 
 login & sign up form complete
+
+# install axios
+
+npm i axios (for fetch networks)
+
+# when i click on submit than new account create
+
+axios.post(`${USER_REGISTER}/register`, {name, email, userName, password})
+axios.post(`${USER_REGISTER}/reloginister`, { userName, password})
+
+# React-Hot-Toast
+
+npm i react-hot-toast (for beautiful massage)

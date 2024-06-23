@@ -1,11 +1,46 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { USER_REGISTER } from "../utils/constant";
 
 const Login = () => {
-  let [isLogin, setIsLogin] = useState(false);
+  let [isLogin, setIsLogin] = useState(true);
+  let [name, setName] = useState("");
+  let [userName, setUserName] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
 
+  // change state of isLogin
   let loginSignUpHandler = () => {
     setIsLogin(!isLogin);
   };
+
+  // when i click on submit than new account create
+  let submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (isLogin) {
+      // register
+      try {
+        let response = await axios.post(`${USER_REGISTER}/register`, {
+          name,
+          userName,
+          email,
+          password,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      //login
+      let response = await axios.post(`${USER_REGISTER}/login`, {
+        email,
+        password,
+      });
+      console.log(response);
+    }
+  };
+
   return (
     <div className="w-screen h-screen flex items-center justify-center ">
       <div className="flex items-center justify-around W-[80%]">
@@ -27,7 +62,7 @@ const Login = () => {
             {isLogin ? "Sign Up" : "Login"}
           </h1>
           {/* login & sign up fields */}
-          <form className="flex flex-col w-[55%]">
+          <form className="flex flex-col w-[55%]" onSubmit={submitHandler}>
             {isLogin && (
               // name and userName fields
               <div>
@@ -35,11 +70,15 @@ const Login = () => {
                   className="outline-green-700 border border-gray-800 px-3 py-2 font-semibold rounded-full my-1"
                   type="text"
                   placeholder="Name"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
                 />
                 <input
                   className="outline-green-700 border border-gray-800 px-3 py-2 font-semibold rounded-full my-1"
                   type="userName"
                   placeholder="userName"
+                  value={userName}
+                  onChange={(event) => setUserName(event.target.value)}
                 />
               </div>
             )}
@@ -48,11 +87,15 @@ const Login = () => {
               className="outline-green-700 border border-gray-800 px-3 py-2 font-semibold rounded-full my-1"
               type="email"
               placeholder="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <input
               className="outline-green-700 border border-gray-800 px-3 py-2 font-semibold rounded-full my-1"
               type="password"
-              placeholder="pasword"
+              placeholder="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
 
             <button className="bg-[#1D9BF0] py-2 px-3 text-white rounded-full outline-none text-xl font-bold hover:scale-95">
