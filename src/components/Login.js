@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { USER_REGISTER } from "../utils/constant";
+import toast from "react-hot-toast";
 
 const Login = () => {
   let [isLogin, setIsLogin] = useState(true);
@@ -14,30 +15,49 @@ const Login = () => {
     setIsLogin(!isLogin);
   };
 
-  // when i click on submit than new account create
+  // when i click on submit than new account create with (rht)
   let submitHandler = async (e) => {
     e.preventDefault();
 
     if (isLogin) {
       // register
       try {
-        let response = await axios.post(`${USER_REGISTER}/register`, {
-          name,
-          userName,
-          email,
-          password,
-        });
+        let response = await axios.post(
+          `${USER_REGISTER}/register`,
+          {
+            name,
+            userName,
+            email,
+            password,
+          }
+        
+        );
+        if (response.data.success) {
+          toast.success(response.data.massage);
+        }
         console.log(response);
       } catch (error) {
         console.log(error);
+        toast.error("err");
       }
     } else {
       //login
-      let response = await axios.post(`${USER_REGISTER}/login`, {
-        email,
-        password,
-      });
-      console.log(response);
+      try {
+        let response = await axios.post(
+          `${USER_REGISTER}/login`,
+          {
+            email,
+            password,
+          }
+        
+        );
+        if (response.data.success) {
+          toast.success(response.data.massage);
+        }
+        console.log(response);
+      } catch (error) {
+        toast.error("else err");
+      }
     }
   };
 
