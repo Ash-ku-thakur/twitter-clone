@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom";
 import Leftsidebar from "./Leftsidebar";
 import RightSidebar from "./RightSidebar";
-import useGetProfile from "../hooks/useGetProfile";
+import useOtherUsers from "../hooks/useOtherUsers";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-
- let id = "667d272c44e45d126d72e4c4"
- let ch = useGetProfile(id)
- console.log(ch);
+  // here is sowing rigthSideBar
+  let { user, otherUsers } = useSelector((state) => state?.user);
+  useOtherUsers(user?._id);
 
   return (
     <div className="w-[86%] mx-auto flex justify-between">
       <Leftsidebar />
       <Outlet />
-      <RightSidebar />
+      <RightSidebar otherUsers={otherUsers?.otherUser} />
     </div>
   );
 };

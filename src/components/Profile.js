@@ -1,9 +1,18 @@
 import React from "react";
 import Avatar from "react-avatar";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useGetProfile from "../hooks/useGetProfile";
+import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const Profile = () => {
+  let { profile } = useSelector((state) => state?.user);
+
+  // dynamic Id use so that we can go into other's profile
+  let { id } = useParams();
+  useGetProfile(id);
+
   return (
     <div>
       <div className="border-l-2 border-r-2 border-black">
@@ -13,8 +22,8 @@ const Profile = () => {
             <IoArrowBackSharp size={"1.5rem"} />
           </Link>
           <div>
-            <h2 className="font-semibold text-xl">Ashish</h2>
-            <h2 className="text-gray-500">@Ashish-tha</h2>
+            <h2 className="font-semibold text-xl">{profile?.name}</h2>
+            <h2 className="text-gray-500">{profile?.userName}</h2>
           </div>
         </div>
         {/* profile image, button edit avatar */}
@@ -38,8 +47,8 @@ const Profile = () => {
               />
             </div>
             <div className="my-3">
-              <h2>Ashish</h2>
-              <h2>@Ashish-tha</h2>
+              <h2>{profile?.name}</h2>
+              <h2>{profile?.userName}</h2>
             </div>
             <div>
               <h2>

@@ -5,6 +5,7 @@ let userSlicer = createSlice({
   initialState: {
     user: null,
     otherUsers: null,
+    profile: null,
   },
   reducers: {
     // actions
@@ -14,8 +15,11 @@ let userSlicer = createSlice({
     otherUsers: (state, action) => {
       state.otherUsers = action.payload;
     },
+    getProfile: (state, action) => {
+      state.profile = action.payload;
+    },
   },
 });
 
 export default userSlicer.reducer;
-export let { getUser, otherUsers } = userSlicer.actions;
+export let { getUser, otherUsers, getProfile } = userSlicer.actions;

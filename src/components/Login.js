@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { USER_REGISTER } from "../utils/constant";
 import toast from "react-hot-toast";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getUser } from "../redux/userSlice";
 
 const Login = () => {
   let [isLogin, setIsLogin] = useState(false);
@@ -10,7 +12,8 @@ const Login = () => {
   let [userName, setUserName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
-  let navigate = useNavigate()
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
 
   // change state of isLogin
   let loginSignUpHandler = () => {
@@ -24,20 +27,17 @@ const Login = () => {
     if (!isLogin) {
       // register
       try {
-        let response = await axios.post(
-          `${USER_REGISTER}/register`,
-          {
-            name,
-            userName,
-            email,
-            password,
-          }
-        
-        );
+        let response = await axios.post(`${USER_REGISTER}/register`, {
+          name,
+          userName,
+          email,
+          password,
+        });
         // after register navigate ("/")
         if (response.data.success) {
-          setIsLogin(true)
-          navigate('/')
+          dispatch(getUser(response?.data?.user)); // after sucess we sent the user data to our store
+          setIsLogin(true);
+          navigate("/");
           toast.success(response.data.massage);
         }
         console.log(response);
@@ -48,18 +48,15 @@ const Login = () => {
     } else {
       //login
       try {
-        let response = await axios.post(
-          `${USER_REGISTER}/login`,
-          {
-            email,
-            password,
-          }
-        
-        );
+        let response = await axios.post(`${USER_REGISTER}/login`, {
+          email,
+          password,
+        });
         // after login navigate ("/")
         if (response.data.success) {
+          dispatch(getUser(response?.data?.user));
           toast.success(response.data.massage);
-          navigate("/")
+          navigate("/");
         }
         console.log(response);
       } catch (error) {
