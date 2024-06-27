@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { USER_REGISTER } from "../utils/constant";
 import toast from "react-hot-toast";
+import {useNavigate} from 'react-router-dom';
 
 const Login = () => {
-  let [isLogin, setIsLogin] = useState(true);
+  let [isLogin, setIsLogin] = useState(false);
   let [name, setName] = useState("");
   let [userName, setUserName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  let navigate = useNavigate()
 
   // change state of isLogin
   let loginSignUpHandler = () => {
@@ -19,7 +21,7 @@ const Login = () => {
   let submitHandler = async (e) => {
     e.preventDefault();
 
-    if (isLogin) {
+    if (!isLogin) {
       // register
       try {
         let response = await axios.post(
@@ -32,7 +34,10 @@ const Login = () => {
           }
         
         );
+        // after register navigate ("/")
         if (response.data.success) {
+          setIsLogin(true)
+          navigate('/')
           toast.success(response.data.massage);
         }
         console.log(response);
@@ -51,8 +56,10 @@ const Login = () => {
           }
         
         );
+        // after login navigate ("/")
         if (response.data.success) {
           toast.success(response.data.massage);
+          navigate("/")
         }
         console.log(response);
       } catch (error) {
@@ -83,7 +90,7 @@ const Login = () => {
           </h1>
           {/* login & sign up fields */}
           <form className="flex flex-col w-[55%]" onSubmit={submitHandler}>
-            {isLogin && (
+            {!isLogin && (
               // name and userName fields
               <div>
                 <input

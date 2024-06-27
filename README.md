@@ -46,3 +46,51 @@ axios.post(`${USER_REGISTER}/reloginister`, { userName, password})
 # React-Hot-Toast
 
 npm i react-hot-toast (for beautiful massage)
+
+# npm i @reactjs/toolkit react-redux
+
+for handeling states
+
+# store
+import { configureStore } from "@reduxjs/toolkit";
+import userSlice from "./userSlice";
+
+let store = configureStore({
+  reducer: {
+    // actions
+    user:userSlice
+  },
+});
+
+export default store
+
+# createSlicers 
+
+import { createSlice } from "@reduxjs/toolkit";
+
+let userSlicer = createSlice({
+  name: "user",
+  initialState: {
+    user: null,
+    otherUsers: null,
+  },
+  reducers: {
+    // actions
+    getUser: (state, action) => {
+      state.user = action.payload;
+    },
+    otherUsers: (state, action) => {
+      state.otherUsers = action.payload;
+    },
+  },
+});
+
+export default userSlicer.reducer;
+export let { getUser, otherUsers } = userSlicer.actions;
+
+# Provider store ={store}
+in a parent component to use redux power 
+
+# create some costome 
+useGetProfile()
+
