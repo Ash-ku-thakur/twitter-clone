@@ -4,10 +4,37 @@ import { IoIosNotifications } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { FaRegBookmark } from "react-icons/fa6";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_END_POINT_API } from "../utils/constant";
+import toast from "react-hot-toast";
+import { getProfile, getUser, otherUsers } from "../redux/userSlice";
+import { getMyTweets } from "../redux/tweetSlicer";
 const Leftsidebar = () => {
   let { user, profile } = useSelector((state) => state?.user);
+
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
+
+  let logoutHandler = async () => {
+    try {
+      let response = await axios.get(`${USER_END_POINT_API}/logout`);
+      dispatch(getUser(null));
+      dispatch(otherUsers(null));
+      dispatch(getProfile(null));
+      dispatch(getMyTweets(null));
+      navigate("/login");
+      console.log(response);
+      if (response?.data?.success) {
+        toast?.success(response?.data?.massage);
+      }
+    } catch (error) {
+      toast?.error(error?.response?.data?.massage);
+
+      console.log(error);
+    }
+  };
 
   return (
     <div className="border-black border-[1px] w-[20%]">
@@ -50,7 +77,10 @@ const Leftsidebar = () => {
             <FaRegBookmark size={"2rem"} />
             <h2 className="font-extrabold text-xl">Bookmarks</h2>
           </div>
-          <div className="flex items-center gap-4 my-5 hover:cursor-pointer hover:bg-gray-200 rounded-full px-4 py-2">
+          <div
+            onClick={logoutHandler}
+            className="flex items-center gap-4 my-5 hover:cursor-pointer hover:bg-gray-200 rounded-full px-4 py-2"
+          >
             <AiOutlineLogout size={"2rem"} />
             <h2 className="font-extrabold text-xl">Logout</h2>
           </div>

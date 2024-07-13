@@ -18,7 +18,10 @@ const RightSidebar = ({ otherUsers }) => {
         <h1 className="font-extrabold text-xl mb-5">Who To follow</h1>
 
         {otherUsers?.map((users) => (
-          <div key={users?._id} className="flex items-center justify-between my-5">
+          <div
+            key={users?._id}
+            className="flex items-center justify-between my-5"
+          >
             {/* avatar user, userNamem*/}
             <div className="flex items-center gap-2">
               <div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { OTHER_USERS } from "../utils/constant";
+import {  USER_END_POINT_API } from "../utils/constant";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { otherUsers } from "../redux/userSlice";
@@ -12,9 +12,10 @@ let useOtherUsers = (id) => {
 
   let fetchOtherUsers = async () => {
     try {
-      let response = await axios.get(`${OTHER_USERS}/otheruser/${id}`);
+      let response = await axios.get(`${USER_END_POINT_API}/otheruser/${id}`,
+        //  {withCredentials:true}
+        );
       dispatch(otherUsers(response?.data));
-      //   setUserData(response?.data?.user);
     } catch (error) {
       console.log(error);
     }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { USER_REGISTER } from "../utils/constant";
+import { USER_END_POINT_API } from "../utils/constant";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -24,15 +24,20 @@ const Login = () => {
   let submitHandler = async (e) => {
     e.preventDefault();
 
+    // login or signUp logic
     if (!isLogin) {
       // register
       try {
-        let response = await axios.post(`${USER_REGISTER}/register`, {
-          name,
-          userName,
-          email,
-          password,
-        });
+        let response = await axios.post(
+          `${USER_END_POINT_API}/register`,
+          {
+            name,
+            userName,
+            email,
+            password,
+          }
+          // { withCredentials: true }
+        );
         // after register navigate ("/")
         if (response.data.success) {
           dispatch(getUser(response?.data?.user)); // after sucess we sent the user data to our store
@@ -48,17 +53,21 @@ const Login = () => {
     } else {
       //login
       try {
-        let response = await axios.post(`${USER_REGISTER}/login`, {
-          email,
-          password,
-        });
+        let response = await axios.post(
+          `${USER_END_POINT_API}/login`,
+          {
+            email,
+            password,
+          }
+          // { withCredentials: true }
+        );
         // after login navigate ("/")
         if (response.data.success) {
           dispatch(getUser(response?.data?.user));
           toast.success(response.data.massage);
           navigate("/");
         }
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         toast.error("else err");
       }
